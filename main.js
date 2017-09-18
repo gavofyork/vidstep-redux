@@ -1,19 +1,3 @@
-(function($) {
-  'use strict';
-
-  document.getElementById('player').crossOrigin = "anonymous";
-
-  var client_id = "JlZIsxg2hY5WnBgtn3jfS0UYCl0K8DOg";
-
-  SC.initialize({
-    client_id: client_id
-  });
-
-  SC.get("/tracks/341328214", {}, function(sound, error) {
-    $('#player').attr('src', `${sound.stream_url}?client_id=${client_id}`);
-  });
-})(jQuery);
-
 function cubicInterpolateIndex(_data, _len, _index) {
 	var fi = Math.floor(_index);
 	var pi = _index - Math.floor(_index);
@@ -405,3 +389,12 @@ function webGLStart() {
   gl.enable(gl.DEPTH_TEST);
   tick();
 }
+
+window.addEventListener('load', () => {
+    document.getElementById('player').crossOrigin = "anonymous";
+    var client_id = "JlZIsxg2hY5WnBgtn3jfS0UYCl0K8DOg";
+    SC.initialize({ client_id });
+    SC.get("/tracks/341328214", {}, function(sound, error) {
+        document.getElementById('player').src = `${sound.stream_url}?client_id=${client_id}`;
+    });
+}, false);

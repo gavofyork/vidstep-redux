@@ -7,7 +7,6 @@
   <link href="main.css" rel="stylesheet" />
   <title>Vidstep (Redux)</title>
   <script src="https://connect.soundcloud.com/sdk.js"></script>
-  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
   <script type="text/javascript" src="main.js"></script>
   <script id="shader-vs" type="x-shader/x-vertex">
         uniform float u_loudness;
@@ -46,8 +45,9 @@
 
   </head>
 <body onload="webGLStart();">
+  <audio id="player" controls style="width: 100%"></audio>
   <!--audio id="player" controls style="width: 100%" src="unueberlegt.mp3"></audio-->
-  <audio id="player" controls style="width: 100%" src="output.m4a"></audio>
+  <!--audio id="player" controls style="width: 100%" src="output.m4a"></audio-->
 
   <canvas id="canvas" style="border: none;" width="640" height="480"></canvas>
 </body>
