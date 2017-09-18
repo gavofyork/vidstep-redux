@@ -1,0 +1,15 @@
+html, body {
+  width:  100%;
+  height: 100%;
+  margin: 0px;
+}
+
+#player, #canvas {
+	position: absolute;
+	top: 0;
+}
+
+#player {
+    z-index: 1;
+    opacity: 0.25;
+}

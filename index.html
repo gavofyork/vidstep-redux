@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="description" content="Vidstep Redux">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <link href="main.css" rel="stylesheet" />
+  <title>Vidstep (Redux)</title>
+  <script type="text/javascript" src="main.js"></script>
+  <script id="shader-vs" type="x-shader/x-vertex">
+        uniform float u_loudness;
+        uniform float u_consistency;
+        uniform vec3 u_tint;
+
+        attribute vec3 aVertexPosition;
+        varying vec2 pos;
+        varying vec3 tint;
+        varying float loudness;
+        varying float consistency;
+
+        void main(void) {
+            loudness = u_loudness;
+            consistency = u_consistency;
+            tint = u_tint;
+            gl_Position = vec4(aVertexPosition.x, aVertexPosition.y * pow(u_consistency, 1.0), aVertexPosition.z, 1.0);
+            pos = vec2(aVertexPosition.x * 0.5 + 0.5, aVertexPosition.y);
+        }
+  </script>
+  <script id="shader-fs" type="x-shader/x-fragment">
+        precision mediump float;
+        uniform sampler2D u_texture;
+        varying vec2 pos;
+        varying vec3 tint;
+        varying float loudness;
+        varying float consistency;
+
+        void main(void) {
+          float t = texture2D(u_texture, vec2(pos.x, 0.5)).a;
+          float y = 1.0 - abs(pos.y);
+          float v = t * pow(y, 2.0 - 1.9 * loudness);
+          gl_FragColor = vec4(tint.r * v, tint.g * v, tint.b * v, 1.0);
+        }
+  </script>
+
+  </head>
+<body onload="webGLStart();">
+  <!--audio id="player" controls style="width: 100%" src="unueberlegt.mp3"></audio-->
+  <audio id="player" controls style="width: 100%" src="output.m4a"></audio>
+  <!--script src="//connect.soundcloud.com/sdk.js"></script>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script-->
+
+  <canvas id="canvas" style="border: none;" width="640" height="480"></canvas>
+</body>
+</html>
