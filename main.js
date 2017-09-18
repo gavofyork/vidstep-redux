@@ -1,4 +1,4 @@
-false && (function($) {
+(function($) {
   'use strict';
 
   document.getElementById('player').crossOrigin = "anonymous";
