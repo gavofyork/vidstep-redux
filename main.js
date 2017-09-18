@@ -174,7 +174,7 @@ var analyser;
 
 function initFromMediaSource(source, context) {
   analyser = context.createAnalyser();
-  analyser.fftSize = 2048;
+  analyser.fftSize = 1024;
   analyser.maxDecibels = 0;
   analyser.minDecibels = -90;
   analyser.smoothingTimeConstant = 0;
@@ -183,7 +183,7 @@ function initFromMediaSource(source, context) {
 }
 
 /// Constants
-const tooClose = 0;
+const tooClose = 8;
 
 /// Stuff for our viz.
 var viz = new Float32Array(512);
@@ -238,11 +238,10 @@ function updateAudio() {
         loudness = Math.max(0, (total - minTotal) / (maxTotal - minTotal));
 
         // Calculate tint...
-        /*
-        var centroid;
-        for (centroid = 0; cumBandMax[centroid] < total / 2; ++centroid) {}
-        tint = hslToRgb(centroid / barkBands.length * 0.67, 1, 0.5);
-        */
+/*        var centroid;
+        for (centroid = 0; cumBands[centroid] < total / 2; ++centroid) {}
+        tint = hslToRgb(centroid / cumBands.length * 0.67, 1, 0.5);
+*/
         var rgb = [0, 0, 0];
         bands.forEach((v, i) => rgb[Math.floor(i / 8)] += v);
         var p = Math.min(rgb[0], rgb[1], rgb[2]);
@@ -285,7 +284,7 @@ function updateAudio() {
 
         // Output...
         if (loudness > 0) {
-            console.log(consistency);
+            //console.log(consistency);
             //console.log('info:', total, maxTotal, loudness, tint, bandMax);
             //console.log(rgb, total, loudness);//centroid / barkBands.length, tint, rgb);//total, bandMax, cumBandMax);
         }
